@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\madu-\\OneDrive\\Arquivos de Inglês\\Área de Trabalho\\Trabalho_Cinema\\Projeto_Final_Cinema\\CinemaAPI.csproj": {}
+    "C:\\Users\\mtmb2\\Downloads\\Projeto DWA\\Projeto_Final_Cinema\\CinemaAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\madu-\\OneDrive\\Arquivos de Inglês\\Área de Trabalho\\Trabalho_Cinema\\Projeto_Final_Cinema\\CinemaAPI.csproj": {
+    "C:\\Users\\mtmb2\\Downloads\\Projeto DWA\\Projeto_Final_Cinema\\CinemaAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\madu-\\OneDrive\\Arquivos de Inglês\\Área de Trabalho\\Trabalho_Cinema\\Projeto_Final_Cinema\\CinemaAPI.csproj",
+        "projectUniqueName": "C:\\Users\\mtmb2\\Downloads\\Projeto DWA\\Projeto_Final_Cinema\\CinemaAPI.csproj",
         "projectName": "CinemaAPI",
-        "projectPath": "C:\\Users\\madu-\\OneDrive\\Arquivos de Inglês\\Área de Trabalho\\Trabalho_Cinema\\Projeto_Final_Cinema\\CinemaAPI.csproj",
-        "packagesPath": "C:\\Users\\madu-\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\madu-\\OneDrive\\Arquivos de Inglês\\Área de Trabalho\\Trabalho_Cinema\\Projeto_Final_Cinema\\obj\\",
+        "projectPath": "C:\\Users\\mtmb2\\Downloads\\Projeto DWA\\Projeto_Final_Cinema\\CinemaAPI.csproj",
+        "packagesPath": "C:\\Users\\mtmb2\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\mtmb2\\Downloads\\Projeto DWA\\Projeto_Final_Cinema\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\madu-\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\mtmb2\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -99,7 +99,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.413/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.414/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
