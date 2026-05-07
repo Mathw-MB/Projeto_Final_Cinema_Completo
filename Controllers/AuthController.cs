@@ -13,35 +13,38 @@ public class AuthController : ControllerBase
     private readonly AppDbContext _context;
     private readonly TokenService _tokenService;
 
-    public AuthController(AppDbContext context)
+    public AuthController(AppDbContext context, TokenService tokenService)
     {
         _context = context;
-        _tokenService = new TokenService();
+        _tokenService = tokenService;
     }
 
     [HttpPost("register")]
-    public IActionResult Resgister(RegisterDTO dto)
+    public IActionResult Register(RegisterDTO dto)
     {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
         var senhaHash = BCrypt.Net.BCrypt.HashPassword(dto.Senha);
         var usuario = new Usuario
         {
             Email = dto.Email,
             Senha = senhaHash
         };
-
         _context.Usuarios.Add(usuario);
         _context.SaveChanges();
         return Ok(usuario);
     }
+
     [HttpPost("login")]
     public IActionResult Login(LoginDTO dto)
     {
-        var user = _context.Usuarios.FirstOrDefault(u => u.Email == dto.Email);
+        if (!ModelState.IsValid) return BadRequest(ModelState);
 
+        var user = _context.Usuarios.FirstOrDefault(u => u.Email == dto.Email);
         if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Senha, user.Senha))
-        return Unauthorized();
+            return Unauthorized();
+
         var token = _tokenService.GenerateToken(user.Email);
         return Ok(new { token });
     }
-    
 }

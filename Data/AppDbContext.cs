@@ -17,35 +17,30 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Sessao → Filme (restrito: não deleta filme que tem sessão)
         modelBuilder.Entity<Sessao>()
             .HasOne(s => s.Filme)
             .WithMany()
             .HasForeignKey(s => s.FilmeId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Sessao → Sala (restrito: não deleta sala que tem sessão)
         modelBuilder.Entity<Sessao>()
             .HasOne(s => s.Sala)
             .WithMany()
             .HasForeignKey(s => s.SalaId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Ingresso → Sessao (cascade: deleta sessão apaga ingressos)
         modelBuilder.Entity<Ingresso>()
             .HasOne(i => i.Sessao)
             .WithMany(s => s.Ingressos)
             .HasForeignKey(i => i.SessaoId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Ingresso → Usuario (restrito: não deleta usuário que tem ingresso)
         modelBuilder.Entity<Ingresso>()
             .HasOne(i => i.Usuario)
             .WithMany()
             .HasForeignKey(i => i.UsuarioId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        // Precisão do decimal de Preco em Sessao
         modelBuilder.Entity<Sessao>(entity =>
         {
             entity.Property(s => s.Preco).HasPrecision(18, 2);

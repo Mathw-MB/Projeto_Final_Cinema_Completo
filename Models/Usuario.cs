@@ -4,7 +4,6 @@ namespace CinemaApi.Models
 {
     public class Usuario
     {
-        
         public int Id { get; set; }
         [Required]
         [EmailAddress]

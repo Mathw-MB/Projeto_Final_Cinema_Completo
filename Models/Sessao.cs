@@ -15,16 +15,16 @@ public class Sessao
     [Column(TypeName = "decimal(18,2)")]
     public decimal Preco { get; set; }
 
-    // FK → Filme
+    
     [Required(ErrorMessage = "O filme é obrigatório")]
     public int FilmeId { get; set; }
     public Filme? Filme { get; set; }
 
-    // FK → Sala
+  
     [Required(ErrorMessage = "A sala é obrigatória")]
     public int SalaId { get; set; }
     public Sala? Sala { get; set; }
 
-    // Navegação reversa
+    
     public ICollection<Ingresso> Ingressos { get; set; } = new List<Ingresso>();
 }

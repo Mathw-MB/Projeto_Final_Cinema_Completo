@@ -12,12 +12,12 @@ public class Ingresso
 
     public DateTime DataCompra { get; set; } = DateTime.Now;
 
-    // FK → Sessao
+    
     [Required(ErrorMessage = "A sessão é obrigatória")]
     public int SessaoId { get; set; }
     public Sessao? Sessao { get; set; }
 
-    // FK → Usuario
+   
     [Required(ErrorMessage = "O usuário é obrigatório")]
     public int UsuarioId { get; set; }
     public Usuario? Usuario { get; set; }
