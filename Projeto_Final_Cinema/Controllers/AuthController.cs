@@ -55,7 +55,7 @@ public class AuthController : ControllerBase
 
         var token = _tokenService.GenerateToken(user.Email);
 
-        // Retorna token + email para exibição no frontend
+       
         return Ok(new { token, email = user.Email });
     }
 }

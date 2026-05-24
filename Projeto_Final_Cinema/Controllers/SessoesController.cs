@@ -71,10 +71,7 @@ public class SessoesController : ControllerBase
         return Ok(res);
     }
 
-    /// <summary>
-    /// Retorna as poltronas ainda disponíveis (não vendidas) para uma sessão específica.
-    /// Consulta a capacidade da sala e subtrai as já ocupadas por ingressos.
-    /// </summary>
+
     [HttpGet("{id:int}/poltronas-disponiveis")]
     [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<string>>> GetPoltronasDisponiveisAsync(int id)
@@ -105,7 +102,7 @@ public class SessoesController : ControllerBase
         var salaExiste = await _context.Salas.AnyAsync(s => s.Id == dto.SalaId);
         if (!salaExiste) return BadRequest(new { message = "Sala não encontrada." });
 
-        // Validação de conflito: mesma sala, mesmo horário (tolerância de 10 minutos)
+       
         var conflito = await _context.Sessoes.AnyAsync(s =>
             s.SalaId == dto.SalaId &&
             Math.Abs(EF.Functions.DateDiffMinute(s.DataHora, dto.DataHora)) < 10);
@@ -141,7 +138,7 @@ public class SessoesController : ControllerBase
         var salaExiste = await _context.Salas.AnyAsync(s => s.Id == dto.SalaId);
         if (!salaExiste) return BadRequest(new { message = "Sala não encontrada." });
 
-        // Validação de conflito ignorando a própria sessão sendo editada
+        
         var conflito = await _context.Sessoes.AnyAsync(s =>
             s.Id != id &&
             s.SalaId == dto.SalaId &&
@@ -170,11 +167,10 @@ public class SessoesController : ControllerBase
         return NoContent();
     }
 
-    // ─── Método auxiliar ────────────────────────────────────────────────────
     private static List<string> GerarPoltronas(int capacidade)
     {
         var poltronas = new List<string>();
-        int assentosPorFileira = 5;
+        int assentosPorFileira = 15;
         char letra = 'A';
         int restante = capacidade;
 

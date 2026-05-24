@@ -59,10 +59,6 @@ public class SalasController : ControllerBase
         return Ok(res);
     }
 
-    /// <summary>
-    /// Retorna todas as poltronas geradas automaticamente para uma sala,
-    /// com base na sua capacidade. Ex: capacidade 30 → A1-A5, B1-B5, ..., F1-F5
-    /// </summary>
     [HttpGet("{id:int}/poltronas")]
     [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<string>>> GetPoltronasAsync(int id)
@@ -120,9 +116,7 @@ public class SalasController : ControllerBase
         return NoContent();
     }
 
-    // ─── Método auxiliar ────────────────────────────────────────────────────
-    // Gera lista de poltronas no formato LetraNúmero (A1, A2, B1, B2...)
-    // com até 5 assentos por fileira, incrementando a letra a cada fileira.
+    
     private static List<string> GerarPoltronas(int capacidade)
     {
         var poltronas = new List<string>();

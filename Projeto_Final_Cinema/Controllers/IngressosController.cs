@@ -10,11 +10,11 @@ namespace CinemaApi.Controllers;
 [Authorize]
 [ApiController]
 [Route("api/[controller]")]
-public class IngresosController : ControllerBase
+public class IngressosController : ControllerBase
 {
     private readonly AppDbContext _context;
 
-    public IngresosController(AppDbContext context)
+    public IngressosController(AppDbContext context)
     {
         _context = context;
     }
