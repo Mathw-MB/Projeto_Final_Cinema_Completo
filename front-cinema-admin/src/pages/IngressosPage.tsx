@@ -8,7 +8,7 @@ import {
 import { poltronasDisponiveis, listarSessoes } from '../api/sessoes';
 import { IngressoDTO, SessaoDTO } from '../api/types';
 
-export function IngresosPage() {
+export function IngressosPage() {
   const [ingressos, setIngressos]       = useState<IngressoDTO[]>([]);
   const [sessoes, setSessoes]           = useState<SessaoDTO[]>([]);
   const [poltronas, setPoltronas]       = useState<string[]>([]);

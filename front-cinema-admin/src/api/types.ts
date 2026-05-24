@@ -1,10 +1,10 @@
-// ─── Auth ────────────────────────────────────────────────────────────────────
+
 export type LoginResponse = {
   token: string;
   email: string;
 };
 
-// ─── Filmes ──────────────────────────────────────────────────────────────────
+
 export type FilmeDTO = {
   id: number;
   titulo: string;
@@ -14,7 +14,7 @@ export type FilmeDTO = {
   sinopse?: string;
 };
 
-// ─── Salas ───────────────────────────────────────────────────────────────────
+
 export type SalaDTO = {
   id: number;
   numero: string;
@@ -22,7 +22,7 @@ export type SalaDTO = {
   tipo: string;
 };
 
-// ─── Sessões ─────────────────────────────────────────────────────────────────
+
 export type SessaoDTO = {
   id: number;
   dataHora: string;
@@ -34,7 +34,7 @@ export type SessaoDTO = {
   salaTipo: string;
 };
 
-// ─── Ingressos ───────────────────────────────────────────────────────────────
+
 export type IngressoDTO = {
   id: number;
   poltrona: string;

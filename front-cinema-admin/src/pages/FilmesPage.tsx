@@ -1,5 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { atualizarFilme, criarFilme, listarFilmes, removerFilme } from '../api/filmes';
+import {
+  atualizarFilme,
+  criarFilme,
+  listarFilmes,
+  removerFilme,
+} from '../api/filmes';
 import { FilmeDTO } from '../api/types';
 
 const CLASSIFICACOES = ['Livre', '10', '12', '14', '16', '18'];
@@ -11,12 +16,13 @@ export function FilmesPage() {
   const [loading, setLoading] = useState(false);
   const [editing, setEditing] = useState<FilmeDTO | null>(null);
 
-  const [titulo, setTitulo]               = useState('');
-  const [genero, setGenero]               = useState('');
-  const [duracao, setDuracao]             = useState<number>(0);
+  const [titulo, setTitulo]           = useState('');
+  const [genero, setGenero]           = useState('');
+  const [duracao, setDuracao]         = useState<number>(0);
   const [classificacao, setClassificacao] = useState('');
-  const [sinopse, setSinopse]             = useState('');
+  const [sinopse, setSinopse]         = useState('');
 
+ 
   const [erroTitulo, setErroTitulo]               = useState('');
   const [erroGenero, setErroGenero]               = useState('');
   const [erroDuracao, setErroDuracao]             = useState('');
@@ -43,20 +49,32 @@ export function FilmesPage() {
 
   function resetForm() {
     setEditing(null);
-    setTitulo(''); setGenero(''); setDuracao(0); setClassificacao(''); setSinopse('');
-    setErroTitulo(''); setErroGenero(''); setErroDuracao(''); setErroClassificacao('');
+    setTitulo(''); setGenero(''); setDuracao(0);
+    setClassificacao(''); setSinopse('');
+    setErroTitulo(''); setErroGenero('');
+    setErroDuracao(''); setErroClassificacao('');
   }
 
   function validar() {
     let valido = true;
     setErroTitulo(''); setErroGenero(''); setErroDuracao(''); setErroClassificacao('');
 
-    if (!titulo.trim()) { setErroTitulo('O título é obrigatório.'); valido = false; }
-    else if (titulo.length > 150) { setErroTitulo('Máximo 150 caracteres.'); valido = false; }
-    if (!genero.trim()) { setErroGenero('O gênero é obrigatório.'); valido = false; }
-    if (!duracao || duracao < 1) { setErroDuracao('Duração deve ser maior que zero.'); valido = false; }
-    else if (duracao > 600) { setErroDuracao('Duração máxima: 600 minutos.'); valido = false; }
-    if (!classificacao) { setErroClassificacao('Selecione a classificação.'); valido = false; }
+    if (!titulo.trim()) {
+      setErroTitulo('O título é obrigatório.'); valido = false;
+    } else if (titulo.length > 150) {
+      setErroTitulo('Máximo 150 caracteres.'); valido = false;
+    }
+    if (!genero.trim()) {
+      setErroGenero('O gênero é obrigatório.'); valido = false;
+    }
+    if (!duracao || duracao < 1) {
+      setErroDuracao('Duração deve ser maior que zero.'); valido = false;
+    } else if (duracao > 600) {
+      setErroDuracao('Duração máxima: 600 minutos.'); valido = false;
+    }
+    if (!classificacao) {
+      setErroClassificacao('Selecione a classificação.'); valido = false;
+    }
     return valido;
   }
 
@@ -64,10 +82,20 @@ export function FilmesPage() {
     e.preventDefault();
     if (!validar()) return;
     setError(null);
-    const payload = { titulo, genero, duracaoMinutos: Number(duracao), classificacao, sinopse: sinopse.trim() || undefined };
+
+    const payload = {
+      titulo, genero,
+      duracaoMinutos: Number(duracao),
+      classificacao,
+      sinopse: sinopse.trim() || undefined,
+    };
+
     try {
-      if (editing) { await atualizarFilme(editing.id, payload); }
-      else { await criarFilme(payload); }
+      if (editing) {
+        await atualizarFilme(editing.id, payload);
+      } else {
+        await criarFilme(payload);
+      }
       resetForm();
       await refresh();
     } catch (err: any) {
@@ -79,11 +107,18 @@ export function FilmesPage() {
     <div className="page">
       <h2 className="page-title">🎬 Filmes</h2>
 
+      {/* FORMULÁRIO */}
       <form className="card" onSubmit={handleSubmit} noValidate>
         <div className="form-grid-2">
           <div className="form-group">
             <label htmlFor="titulo">Título</label>
-            <input id="titulo" value={titulo} onChange={(e) => setTitulo(e.target.value)} placeholder="Ex: Oppenheimer" maxLength={150} />
+            <input
+              id="titulo"
+              value={titulo}
+              onChange={(e) => setTitulo(e.target.value)}
+              placeholder="Ex: Oppenheimer"
+              maxLength={150}
+            />
             {erroTitulo && <span className="field-error">{erroTitulo}</span>}
           </div>
 
@@ -98,7 +133,14 @@ export function FilmesPage() {
 
           <div className="form-group">
             <label htmlFor="duracao">Duração (minutos)</label>
-            <input id="duracao" type="number" min="1" max="600" value={duracao || ''} onChange={(e) => setDuracao(Number(e.target.value))} />
+            <input
+              id="duracao"
+              type="number"
+              min="1"
+              max="600"
+              value={duracao || ''}
+              onChange={(e) => setDuracao(Number(e.target.value))}
+            />
             {erroDuracao && <span className="field-error">{erroDuracao}</span>}
           </div>
 
@@ -113,38 +155,75 @@ export function FilmesPage() {
 
           <div className="form-group" style={{ gridColumn: '1 / -1' }}>
             <label htmlFor="sinopse">Sinopse <span style={{ color: 'var(--muted)', fontWeight: 400 }}>(opcional)</span></label>
-            <textarea id="sinopse" value={sinopse} onChange={(e) => setSinopse(e.target.value)} placeholder="Breve descrição do filme..." maxLength={500} />
+            <textarea
+              id="sinopse"
+              value={sinopse}
+              onChange={(e) => setSinopse(e.target.value)}
+              placeholder="Breve descrição do filme..."
+              maxLength={500}
+            />
           </div>
         </div>
 
         <div className="form-actions">
-          <button className="btn-primary" type="submit">{editing ? '✔ Atualizar Filme' : '＋ Cadastrar Filme'}</button>
-          {editing && <button className="btn-secondary" type="button" onClick={resetForm}>Cancelar</button>}
+          <button className="btn-primary" type="submit">
+            {editing ? '✔ Atualizar Filme' : '＋ Cadastrar Filme'}
+          </button>
+          {editing && (
+            <button className="btn-secondary" type="button" onClick={resetForm}>Cancelar</button>
+          )}
         </div>
       </form>
 
       {error && <div className="form-error">{error}</div>}
       {loading && <div className="loading">Carregando...</div>}
 
+      {/* LISTA */}
       <div className="list">
         {sortedFilmes.map((f) => (
           <div key={f.id} className="list-item">
             <div className="list-item-info">
               <strong className="list-item-title">{f.titulo}</strong>
-              <span className="list-item-sub">{f.genero} · {f.duracaoMinutos} min · <span className="badge badge-yellow">{f.classificacao}</span></span>
-              {f.sinopse && <span className="list-item-sub" style={{ maxWidth: 480 }}>{f.sinopse}</span>}
+              <span className="list-item-sub">
+                {f.genero} · {f.duracaoMinutos} min ·{' '}
+                <span className="badge badge-yellow">{f.classificacao}</span>
+              </span>
+              {f.sinopse && (
+                <span className="list-item-sub" style={{ maxWidth: 480 }}>{f.sinopse}</span>
+              )}
             </div>
             <div className="form-actions">
-              <button className="btn-outline" type="button" onClick={() => { setEditing(f); setTitulo(f.titulo); setGenero(f.genero); setDuracao(f.duracaoMinutos); setClassificacao(f.classificacao); setSinopse(f.sinopse ?? ''); }}>Editar</button>
-              <button className="btn-danger" type="button" onClick={async () => {
-                if (!window.confirm(`Remover o filme "${f.titulo}"?`)) return;
-                try { await removerFilme(f.id); await refresh(); }
-                catch (err: any) { setError(err?.response?.data?.message ?? err?.message ?? 'Falha ao remover.'); }
-              }}>Remover</button>
+              <button
+                className="btn-outline"
+                type="button"
+                onClick={() => {
+                  setEditing(f);
+                  setTitulo(f.titulo);
+                  setGenero(f.genero);
+                  setDuracao(f.duracaoMinutos);
+                  setClassificacao(f.classificacao);
+                  setSinopse(f.sinopse ?? '');
+                }}
+              >
+                Editar
+              </button>
+              <button
+                className="btn-danger"
+                type="button"
+                onClick={async () => {
+                  if (!window.confirm(`Remover o filme "${f.titulo}"?`)) return;
+                  try { await removerFilme(f.id); await refresh(); }
+                  catch (err: any) { setError(err?.response?.data?.message ?? err?.message ?? 'Falha ao remover.'); }
+                }}
+              >
+                Remover
+              </button>
             </div>
           </div>
         ))}
-        {!loading && sortedFilmes.length === 0 && <div className="empty-state">Nenhum filme cadastrado.</div>}
+        {!loading && sortedFilmes.length === 0 && (
+          <div className="empty-state">Nenhum filme cadastrado.</div>
+        )}
       </div>
     </div>
   );
