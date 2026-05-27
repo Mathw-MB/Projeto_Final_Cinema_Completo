@@ -61,18 +61,23 @@ export function IngressosPage() {
   }
 
   function validar() {
-    let valido = true;
-    setErroSessao(''); setErroUsuario(''); setErroPoltrona('');
-
-    if (!editing) {
-      if (!sessaoId) { setErroSessao('Selecione uma sessão.'); valido = false; }
-      if (!usuarioId || Number(usuarioId) <= 0) {
-        setErroUsuario('Informe um ID de usuário válido.'); valido = false;
-      }
+  let valido = true;
+  setErroSessao(''); setErroUsuario(''); setErroPoltrona('');
+  if (!editing) {
+    if (!sessaoId) { setErroSessao('Selecione uma sessão.'); valido = false; }
+    if (!usuarioId || Number(usuarioId) <= 0) {
+      setErroUsuario('Informe um ID de usuário válido.'); valido = false;
     }
-    if (!poltrona.trim()) { setErroPoltrona('Selecione uma poltrona.'); valido = false; }
-    return valido;
   }
+  if (!poltrona.trim()) {
+    setErroPoltrona('Selecione uma poltrona.'); valido = false;
+  } else if (editing && !/^[A-Z]\d{1,2}$/.test(poltrona.trim())) {
+    setErroPoltrona('Formato inválido. Use letra + até 2 dígitos (ex: A1, B12).'); valido = false;
+  }
+  return valido; 
+}
+
+  
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -165,9 +170,11 @@ export function IngressosPage() {
               <input
                 id="poltronaEdit"
                 value={poltrona}
-                onChange={(e) => setPoltrona(e.target.value.toUpperCase())}
-                placeholder="Ex: A1"
-                maxLength={10}
+                onChange={(e) => {
+                const val = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+                setPoltrona(val);
+              }}
+              maxLength={3}
               />
               {erroPoltrona && <span className="field-error">{erroPoltrona}</span>}
             </div>
